@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {setToken, fetchToken} from './Auth.js';
 import {useNavigate} from "react-router-dom";
-import axios, * as others from 'axios';
+import axios from 'axios';
 
 export default function CreateAccount(){    
     const navigate = useNavigate();
@@ -12,7 +12,6 @@ export default function CreateAccount(){
     const createUser = () =>{
         if(username === '' && password === '' && full_name === '' && email === ''){            
         return } else { 
-        console.log('axios')
         let json_axios = axios.create({headers: 
             { 'content-type': 'application/json' }})
         json_axios.post('http://127.0.0.1:8045/create_user/', {

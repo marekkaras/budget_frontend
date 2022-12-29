@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {setToken, fetchToken} from './Auth.js';
 import {useNavigate} from "react-router-dom";
-import axios, * as others from 'axios';
+import axios from 'axios';
 
 export default function Login(){    
     const navigate = useNavigate();
@@ -13,7 +13,6 @@ export default function Login(){
     const login = () =>{        
         if(username === '' && password === ''){            
         return } else { 
-        console.log('axios')
         let urlencoded_axios = axios.create({headers: 
             { 'content-type': 'application/x-www-form-urlencoded' }})
         urlencoded_axios.post('http://127.0.0.1:8045/token', {
@@ -34,7 +33,7 @@ export default function Login(){
                 {
                     fetchToken() 
                     ? (
-                        <p>You are logged in!</p>
+                        navigate("/profile")
                     ) 
                     : (
                     <form>

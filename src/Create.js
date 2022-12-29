@@ -3,22 +3,23 @@ import {setToken, fetchToken} from './Auth.js';
 import {useNavigate} from "react-router-dom";
 import axios, * as others from 'axios';
 
-export default function Login(){    
+export default function CreateAccount(){    
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const goToCreate = () =>{
-        navigate("/create");
-    };
-    const login = () =>{        
-        if(username === '' && password === ''){            
+    const [email, setEmail] = useState('');
+    const [full_name, setFullName] = useState('');
+    const createUser = () =>{
+        if(username === '' && password === '' && full_name === '' && email === ''){            
         return } else { 
         console.log('axios')
-        let urlencoded_axios = axios.create({headers: 
-            { 'content-type': 'application/x-www-form-urlencoded' }})
-        urlencoded_axios.post('http://127.0.0.1:8045/token', {
+        let json_axios = axios.create({headers: 
+            { 'content-type': 'application/json' }})
+        json_axios.post('http://127.0.0.1:8045/create_user/', {
                 username: username,
-                password: password})
+                password: password,
+                email: email,
+                full_name: full_name})
         .then(function (response) {if(response.data.access_token){
             setToken(response.data.access_token)
             navigate("/profile");
@@ -26,11 +27,15 @@ export default function Login(){
         }).catch(function (error) {
         console.log(error, 'error');            
         });}
-    };    
+    }
+    const goBackToLogin = () =>{        
+        navigate("/");
+    }
     return(
     <>
         <div style = {{minHeight: 800, marginTop: 20 }}>
-            <h1>Budget App</h1>                <div style = {{marginTop: 50 }} >
+            <h1>Budget App</h1>                
+            <div style = {{marginTop: 50 }} >
                 {
                     fetchToken() 
                     ? (
@@ -44,14 +49,19 @@ export default function Login(){
                     <label style = {{marginRight: 10 }}>Password: </label>
                     <input type = 'text'  onChange={ (e)=> setPassword(e.target.value)} />
                     <br></br>
-                    <button type = 'button' onClick = {login}>Login</button>
+                    <label style = {{marginRight: 10 }}>Email: </label>
+                    <input type = 'text'  onChange={ (e)=> setEmail(e.target.value)} />
                     <br></br>
-                    <button type = 'button' onClick = {goToCreate}>Create Account</button>
+                    <label style = {{marginRight: 10 }}>Full Name: </label>
+                    <input type = 'text'  onChange={ (e)=> setFullName(e.target.value)} />
+                    <br></br>
+                    <button type = 'button' onClick = {createUser}>Create User</button>
+                    <br></br>
+                    <button type = 'button' onClick = {goBackToLogin}>Go Back</button>
                     </form>
                     )
                 }
-                               </div>            </div>
-        
+            </div>
+        </div>   
     </>
-    )
-}
+    )}

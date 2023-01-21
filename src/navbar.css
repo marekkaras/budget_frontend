@@ -1,0 +1,53 @@
+.navbar {
+    border: 1px solid;
+    margin: 0.2rem;
+    padding: 0;
+    width: 20%;
+    height: 100%;
+    position: fixed;
+    display: block;
+}
+
+.navbar a:hover {
+    background: lightskyblue;
+    color: white;
+}
+
+.navbar header img {
+    margin: 1em;
+    padding: 1em;
+    background: black;
+}
+
+.top_link a {
+    font-weight: bold;
+    text-decoration: none;
+    color: darkblue;
+    text-align: left;
+    height: 20%;
+    margin-bottom: 2em;
+}
+
+.overview {
+    margin-left: 1em;
+    text-align: left;
+}
+
+.overview li {
+    display: block;
+}
+
+.overview li a {
+    text-decoration: none;
+    color: darkblue;
+}
+
+.bottom_links a {
+    display: block;
+    padding-top: 3em;
+    text-decoration: none;
+    color: darkblue;
+    text-align: center;
+}
+
+

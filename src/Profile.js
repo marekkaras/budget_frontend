@@ -2,9 +2,14 @@ import React from 'react';
 import {useNavigate} from "react-router-dom";
 import {fetchToken} from './js/Auth.js';
 import axios from 'axios';
+import './css/Profile.css';
+import SummaryTab from "./js/Summary.js";
+import HistoryTab from "./js/History.js";
+import SettingsTab from "./js/Settings.js";
+import LogOutButton from "./js/LogOut.js";
 
 // rendering user info class
-class RenderUserInfo extends React.Component {
+class RenderProfile extends React.Component {
 
     // constructor
     constructor(props) {
@@ -20,9 +25,33 @@ class RenderUserInfo extends React.Component {
             budget_uuid: '',
             disabled: 0,
             budget: JSON,
+            summary_tab: true,
+            history_tab: false,
+            settings_tab: false,
         };
         this.getUserInfo();
         this.getBugetsInfo();
+        this.switchTab = this.switchTab.bind(this);
+    }
+    
+    switchTab(name) {
+        switch (name) {
+            case "summary":
+                this.setState({ summary_tab: true });
+                this.setState({ history_tab: false });
+                this.setState({ settings_tab: false });
+                break;
+            case "history":
+                this.setState({ summary_tab: false });
+                this.setState({ history_tab: true });
+                this.setState({ settings_tab: false });
+                break;
+            case "settings":
+                this.setState({ summary_tab: false });
+                this.setState({ history_tab: false });
+                this.setState({ settings_tab: true });
+                break;
+        }
     }
 
     // get user info from the api
@@ -66,81 +95,41 @@ class RenderUserInfo extends React.Component {
             // parse response
             const parsed_response = JSON.stringify(response.data)
             const json_response = JSON.parse(parsed_response)
-            console.log(json_response);
             self.setState({ budget: json_response});
-            console.log(self.state.budget)
             }).catch(function (error) {
             console.log(error, 'error')        
             });}
+            
+    signOut = () => {
+        const navigate = useNavigate();
+        localStorage.removeItem('login_token')
+        navigate("/");
+    }
     
     // render element
     render() {
         return (
-        <div>
-        <p>Hello <b>{this.state.full_name}</b> [login: <b>{this.state.username}</b>, email: <b>{this.state.email}</b>]</p>
-        <br></br>
-        <button>Add Budget</button>
-        <button>Update Budget</button>
-        <button>Delete Budget</button>
-        <br></br>
-        <select name="cars" id="cars">
-          <option value="volvo">January 2023</option>
-          <option value="saab">Saab</option>
-          <option value="mercedes">Mercedes</option>
-          <option value="audi">Audi</option>
-        </select>
-        <p><b>Your budget for January 2023 is {this.state.budget.amount} {this.state.budget.base_ccy}</b></p>
-        <button>Add Category</button>
-        <button>Remove Category</button>
-        <p>Category name: <b>Fun</b>, allocated <b>500.00</b> in USD [remaning: <b>396.50</b> in USD]</p>
-         <table class="center">
-          <tr>
-            <th>Date</th>
-            <th>Expense</th>
-            <th>Amount</th>
-            <th>Exchange Rate</th>
-            <th>Budget Amount</th>
-          </tr>
-          <tr>
-            <td>2023-01-01</td>
-            <td>Tacos</td>
-            <td>50.00 USD</td>
-            <td>1.00</td>
-            <td>50.00 USD</td>
-          </tr>
-          <td>2023-01-01</td>
-            <td>Tacos</td>
-            <td>50.00 EUR</td>
-            <td>1.07</td>
-            <td>53.50 USD</td>
-        </table>
-        <button>Add Expense</button>
-        <button>Update Expense</button>
-        <button>Remove Expense</button>
-        <br></br>
-        <p>Category name: <b>Bills</b>, allocated <b>500.00</b> in USD [remaning: <b>419.00</b> in USD]</p>
-         <table class="center">
-          <tr>
-            <th>Date</th>
-            <th>Expense</th>
-            <th>Amount</th>
-            <th>Exchange Rate</th>
-            <th>Budget Amount</th>
-          </tr>
-          <tr>
-            <td>2023-01-02</td>
-            <td>Gas</td>
-            <td>75.00 CHF</td>
-            <td>1.08</td>
-            <td>81.00 USD</td>
-          </tr>
-        </table>
-        <button>Add Expense</button>
-        <button>Update Expense</button>
-        <button>Remove Expense</button>
-        <br></br>
-        <br></br>
-        </div>);
+        <>
+        <h1>Budget 1.0</h1>
+            <div id="profile_wrapper">
+                <div id="menu_div">
+                    <div>
+                        <button onClick={() => this.switchTab("summary")}>Summary</button>
+                        <button onClick={() => this.switchTab("history")}>History</button>
+                        <button onClick={() => this.switchTab("settings")}>Settings</button>
+                        <LogOutButton/>
+                    </div>
+                </div>
+                <div id="main_div">
+                    <div>
+                        {this.state.summary_tab && <SummaryTab />}
+                        {this.state.history_tab && <HistoryTab />}
+                        {this.state.settings_tab && <SettingsTab />}
+                    </div>
+                </div>
+            </div>
+        </>
+        );
     }
 }
 
@@ -155,14 +144,7 @@ export default function Profile(){
     
     return(
         <>
-            <div style = {{minHeight: 800, marginTop: 20 }}>
-                <h1>Budget 1.0</h1>
-                <RenderUserInfo/>            
-                <div>
-                    <button type = 'button' onClick= {signOut}>Sign Out</button>
-                </div>
-            </div>
-            
+            <RenderProfile/>
         </>
     )
 }

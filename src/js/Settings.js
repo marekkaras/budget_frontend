@@ -1,10 +1,29 @@
-import Navbar from './Navbar.js'
-import './settings.css'
+import React, { Component } from "react";
 
-export default function Settings () {
+
+class SettingsTab extends Component {
+    constructor() {
+        super();
+        this.state = {
+            name: "React"
+        };
+    }
+    render() {
+        return (
+            <div>
+                <p>This is settings component</p>
+                <Settings/>
+            </div>
+        );
+    }
+}
+
+
+export default SettingsTab;
+
+function Settings () {
     return (
         <>
-            <Navbar />
             <div class="settings">
                 <section class="display_currency">
                     <p>Position Summary Display Currency</p>

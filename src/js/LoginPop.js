@@ -89,7 +89,7 @@ function LoginBox() {
                 <input type = 'text'  onChange={ (e)=> setUsername(e.target.value)} />
                 <br></br>
                 <label style = {{marginRight: 10 }}>Password: </label>
-                <input type = 'text'  onChange={ (e)=> setPassword(e.target.value)} />
+                <input type = 'password'  onChange={ (e)=> setPassword(e.target.value)} />
                 <br></br>
                 <button type = 'button' onClick = {login}>Login</button>
                 <br></br>

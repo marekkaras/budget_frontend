@@ -1,0 +1,34 @@
+.settings {
+    text-align: center;
+}
+
+.conversionTypes {
+    display: flex;
+    flex-direction: column;
+}
+
+.toggleTitles {
+    display: flex;
+}
+
+.toggleTitles span {
+    margin: 0 1em;
+}
+
+.toggleTitles span[id="auto"] {
+    float: left;
+}
+
+.toggleTitles span[id="manual"] {
+    float: right;
+}
+
+.userCurrencies {
+    display: flex;
+    flex-direction: column;
+}
+
+.userCurrencies input {
+    margin-left: 2em;
+    float: right;
+}

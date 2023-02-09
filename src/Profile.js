@@ -30,7 +30,6 @@ class RenderProfile extends React.Component {
             settings_tab: false,
         };
         this.getUserInfo();
-        this.getBugetsInfo();
         this.switchTab = this.switchTab.bind(this);
     }
     
@@ -78,28 +77,6 @@ class RenderProfile extends React.Component {
             console.log(error, 'error')        
             });}
             
-    // Get budget info
-    getBugetsInfo = () => {
-        // bind self to this so state can be returned
-        // check if user data was already fetched to keep strain on api minimal
-        var self = this;
-        // get login token
-        var login_token = fetchToken();
-        // create headers and make an api call
-        let urlencoded_axios = axios.create({headers: 
-            { 'content-type': 'application/json', 
-            'Authorization': `Bearer ${login_token}` }})
-        urlencoded_axios.post('http://127.0.0.1:8045/get_budget_summary/',
-                                {uuid: "c89d4648-666d-4b6d-b9e0-6db67391e1ba"})
-        .then(function (response) {
-            // parse response
-            const parsed_response = JSON.stringify(response.data)
-            const json_response = JSON.parse(parsed_response)
-            self.setState({ budget: json_response});
-            }).catch(function (error) {
-            console.log(error, 'error')        
-            });}
-            
     signOut = () => {
         const navigate = useNavigate();
         localStorage.removeItem('login_token')
@@ -111,8 +88,10 @@ class RenderProfile extends React.Component {
         return (
         <>
         <h1>Budget 1.0</h1>
+        <p>Hello {this.state.full_name} [{this.state.username}, {this.state.email}]</p>
             <div id="profile_wrapper">
                 <div id="menu_div">
+                    <p>menu</p>
                     <div>
                         <button onClick={() => this.switchTab("summary")}>Summary</button>
                         <button onClick={() => this.switchTab("history")}>History</button>

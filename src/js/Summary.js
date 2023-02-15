@@ -26,7 +26,7 @@ function Summary() {
 			<h2> Monthly Summary </h2>
 			<div className="summary">
 				<section className="datePicker">
-					<label htmlFor="summaryDate">Month</label>
+					<label htmlFor="summaryDate"></label>
 					<input type="month" id="summaryDate" value="2023-02"></input>
 				</section>
 

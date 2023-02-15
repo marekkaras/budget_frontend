@@ -36,8 +36,8 @@ function Summary() {
 						<img src={require("../img/pie.jpg")} alt="Budget pie chart"></img>
 					</div>
 
-					<div className="categoriesTable">
-						<table>
+					<div className="categoriesTableDiv">
+						<table className="categoriesTable">
 							<tbody>
 								<tr>
 									<th>Category</th>

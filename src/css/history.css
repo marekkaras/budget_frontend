@@ -1,0 +1,28 @@
+.datePicker {
+    margin: 10px;
+}
+
+.historyTable{
+    margin: 0 20px;
+    max-width: 100%;
+    display: grid; 
+    table-layout: fixed;
+}
+
+th{
+    background-color: #3185FC;
+    color: white;
+}
+
+td + td {
+    padding: 3px 20px;
+}
+
+td:last-child {
+    flex: 1;
+    display:inline-block;
+}
+
+.historyTable tr:nth-child(odd){
+    background-color: #D1DEDE;
+}

@@ -29,9 +29,13 @@ function Settings() {
 	});
 
 	const handleChange = (event) => {
+		let value = event.target.value;
+		if (event.target.type === "checkbox") {
+			value = event.target.checked;
+		}
 		setUserPreferences({
 			...userPreferences,
-			[event.target.name]: event.target.value,
+			[event.target.name]: value
 		});
 	};
 

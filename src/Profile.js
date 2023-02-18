@@ -104,18 +104,21 @@ class RenderProfile extends React.Component {
 						<p>Menu</p>
 
 						<button
+    						value={this.state.summary_tab} 
 							className="menuButton"
 							onClick={() => this.switchTab("summary")}
 						>
 							Summary
 						</button>
 						<button
+    						value={this.state.history_tab} 
 							className="menuButton"
 							onClick={() => this.switchTab("history")}
 						>
 							History
 						</button>
 						<button
+    						value={this.state.settings_tab} 
 							className="menuButton"
 							onClick={() => this.switchTab("settings")}
 						>

@@ -5,7 +5,7 @@ import axios from "axios";
 import "./css/Profile.css";
 import SummaryTab from "./js/Summary.js";
 import HistoryTab from "./js/History.js";
-import SettingsTab from "./js/Settings.js";
+import ManageTab from "./js/Manage.js";
 import LogOutButton from "./js/LogOut.js";
 
 // rendering user info class
@@ -26,7 +26,7 @@ class RenderProfile extends React.Component {
 			budget: JSON,
 			summary_tab: true,
 			history_tab: false,
-			settings_tab: false,
+			manage_tab: false,
 		};
 		this.getUserInfo();
 		this.switchTab = this.switchTab.bind(this);
@@ -34,21 +34,27 @@ class RenderProfile extends React.Component {
 
 	switchTab(name) {
 		switch (name) {
+    		default:
+    				this.setState({ summary_tab: true });
+    				this.setState({ history_tab: false });
+    				this.setState({ manage_tab: false });
+    				break;
 			case "summary":
 				this.setState({ summary_tab: true });
 				this.setState({ history_tab: false });
-				this.setState({ settings_tab: false });
+				this.setState({ manage_tab: false });
 				break;
 			case "history":
 				this.setState({ summary_tab: false });
 				this.setState({ history_tab: true });
-				this.setState({ settings_tab: false });
+				this.setState({ manage_tab: false });
 				break;
-			case "settings":
+			case "manage":
 				this.setState({ summary_tab: false });
 				this.setState({ history_tab: false });
-				this.setState({ settings_tab: true });
+				this.setState({ manage_tab: true });
 				break;
+				
 		}
 	}
 
@@ -118,11 +124,11 @@ class RenderProfile extends React.Component {
 							History
 						</button>
 						<button
-    						value={this.state.settings_tab} 
+    						value={this.state.manage_tab} 
 							className="menuButton"
-							onClick={() => this.switchTab("settings")}
+							onClick={() => this.switchTab("manage")}
 						>
-							Settings
+							Manage
 						</button>
 						<LogOutButton />
 					</div>
@@ -130,7 +136,7 @@ class RenderProfile extends React.Component {
 						<div>
 							{this.state.summary_tab && <SummaryTab />}
 							{this.state.history_tab && <HistoryTab />}
-							{this.state.settings_tab && <SettingsTab />}
+							{this.state.manage_tab && <ManageTab />}
 						</div>
 					</div>
 				</div>
@@ -142,11 +148,6 @@ class RenderProfile extends React.Component {
 // main profile rendering page
 export default function Profile() {
 	// consts
-	const navigate = useNavigate();
-	const signOut = () => {
-		localStorage.removeItem("login_token");
-		navigate("/");
-	};
 
 	return (
 		<>

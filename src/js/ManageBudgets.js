@@ -44,21 +44,16 @@ function ManagerLoader ( {stateChanger, bi, selected} ) {
 }
 
 
-export function Manager( {bi, handler, value = "", onChange} ) {
+export function Manager( {bi, handler, budgetCache, cachedBudget, value = "", onChange} ) {
 
     const [year, setYear] = useState(2023);
     const [month, setMonth] = useState(1);
     const [ccy, setCcy] = useState("USD");
     const [amount, setAmount] = useState(0.0);
-    const [displayBudget, setdisplayBudget] = useState({
-            visible: false,
-    		uuid: "",
-    	});
-    const [selectedBudget, setSelectedBudget] = useState(null);
+    const [selectedBudget, setSelectedBudget] = useState(cachedBudget);
     var selectableOptions = [];
     if (typeof bi[0] === 'string' || bi[0] instanceof String) {
         selectableOptions = [ {value: null, label: 'No budgets', selectedBudget: null} ]
-        console.log('this')
     } else {
         selectableOptions = bi.map(
                 (x => ({ 'value': x.uuid, 
@@ -92,22 +87,20 @@ export function Manager( {bi, handler, value = "", onChange} ) {
             onChange(event.target.value);
         }
     }
-                            
-    const handleChange = () => {
-		setdisplayBudget({
-			...displayBudget,
-			visible: true
-		});
-	};
-	
+    
 	const stateChanger = () => {
+    	budgetCache(selectedBudget);
+    	handler();
+	}
+	
+	const stateChangerRemoveBudget = () => {
+    	budgetCache(null);
     	handler();
 	}
   
 	return (
 		<>
 			<div className="settings">
-    			<h1> Manage Budgets </h1>
     			
     			<h2> Add / update budget: </h2>
     			<label htmlFor="year">Year:</label>
@@ -140,24 +133,18 @@ export function Manager( {bi, handler, value = "", onChange} ) {
     			<br/>
     			<br/>
     			
-    			<h2> Manage budgets: </h2>
+    			<h2> Manage budgets: </h2>            
+                <button type ='button' onClick={() => deleteBudget({stateChangerRemoveBudget, selectedBudget})}>Delete Selected</button>
     			<Select
                     className="input-cont"
                     placeholder= "Select budget"
                     defaultValue={selectedBudget}
                     onChange={setSelectedBudget}
                     options={selectableOptions}
-                  />
-                <button onClick={handleChange}>Display Selected</button>                
-                <button type ='button' onClick={() => deleteBudget({stateChanger, selectedBudget})}>Delete Selected</button>
-                <br/>
+                  /><br/>
     			<br/>
+    			<ManagerLoader bi={bi} selected={selectedBudget} stateChanger={stateChanger}/>
     			<>
-    			{displayBudget.visible ?
-                   <ManagerLoader bi={bi} selected={selectedBudget} stateChanger={stateChanger}/>
-                   :
-                   null
-                }
                 </>
 			</div>
 		</>

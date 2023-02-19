@@ -8,18 +8,25 @@ class ManageTab extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { loading: true,
-                        budget_info: []};
+                        budget_info: [],
+                        selectedBudget: null};
         this.getBudgetsInfo();
 		this.handler = this.handler.bind(this);
+		this.budgetCache = this.budgetCache.bind(this);
 	}
 	
 	handler() {
-        this.setState({
-          loading: true
+    	this.setState({
+        	loading: true
         })
         this.getBudgetsInfo();
-      }
-
+    }
+    
+    budgetCache(selectedBudget) {
+        this.setState({
+        	selectedBudget: selectedBudget
+        })
+    }
 
 	getBudgetsInfo = () => {
 		var self = this;
@@ -50,7 +57,7 @@ class ManageTab extends Component {
 				{this.state.loading ?
 				<p>loading</p>
 				:
-				<Manager bi={this.state.budget_info} handler={this.handler}/>
+				<Manager bi={this.state.budget_info} handler={this.handler} budgetCache={this.budgetCache} cachedBudget={this.state.selectedBudget}/>
 				}
 			</div>
 		);

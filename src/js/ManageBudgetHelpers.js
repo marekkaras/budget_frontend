@@ -2,7 +2,7 @@ import axios from "axios";
 import { fetchToken } from "./Auth.js";
 
 
-export function deleteBudget( {stateChanger, selectedBudget} ) {
+export function deleteBudget( {stateChangerRemoveBudget, selectedBudget} ) {
     console.log(selectedBudget);
     if (selectedBudget === null || selectedBudget === undefined) {
         return
@@ -25,7 +25,7 @@ export function deleteBudget( {stateChanger, selectedBudget} ) {
 				const parsed_response = JSON.stringify(response.data);
 				const json_response = JSON.parse(parsed_response);
 				console.log(json_response);
-				stateChanger();
+				stateChangerRemoveBudget();
 			})
 			.catch(function (error) {
 				console.log(error, "error");

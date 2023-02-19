@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Select from 'react-select';
 import { deleteBudget } from "./ManageBudgetHelpers.js";
+import { ManageCategories } from "./ManageCategories.js";
 
 
 function ManagerLoader ( {bi, selected} ) {
@@ -12,12 +13,30 @@ function ManagerLoader ( {bi, selected} ) {
         return
     }
     
-    console.log(bi)
-    console.log(selected.value)
+    let current_budget;
+    bi.map((x) => {
+        if (x.uuid === selected.value) {
+            current_budget = x;
+        }
+        return null
+    });
+    
+    var categories = current_budget.categories;
 
     return (
         <>
-            <p>something</p>
+            Selected budget: 
+            <br></br>
+            Year: {current_budget.year}
+            <br></br>
+            Month: {current_budget.month}
+            <br></br>
+            Amount: {current_budget.amount}
+            <br></br>
+            Base currency: {current_budget.base_ccy}
+            <br></br>
+            <br></br>
+            <ManageCategories categories={categories}/>
         </>
     
     

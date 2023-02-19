@@ -1,0 +1,23 @@
+.expense_date {
+  width: 90px;
+}
+
+.expense_name {
+  width: 200px;
+}
+
+.expense_amount {
+  width: 70px;
+}
+
+.expense_base_ccy {
+  width: 50px;
+}
+
+.expense_exchange_rate {
+  width: 30px;
+}
+
+.expense_amount_budget {
+  width: 70px;
+}

@@ -51,7 +51,7 @@ function History() {
 				<section className="datePicker">
 					<label htmlFor="historyDate"></label>
 					{/* TODO: customize datepicker as per survey results */}
-					<input type="month" id="historyDate" value="2023-02"></input>
+					<input type="month" id="historyDate" value="2023-02" readOnly></input>
 				</section>
 				<section className="historyTable">
 					<table>

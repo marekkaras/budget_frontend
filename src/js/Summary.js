@@ -54,7 +54,7 @@ function Summary() {
 			<div className="summary">
 				<section className="datePicker">
 					<label htmlFor="summaryDate"></label>
-					<input type="month" id="summaryDate" value="2023-02"></input>
+					<input type="month" id="summaryDate" value="2023-02" readOnly></input>
 				</section>
 
 				<section className="summaryPlot">

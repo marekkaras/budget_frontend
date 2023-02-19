@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Select from 'react-select';
-import { deleteBudget } from "./ManageBudgetHelpers.js";
+import { deleteBudget, addBudget } from "./ManageBudgetHelpers.js";
 import { ManageCategories } from "./ManageCategories.js";
 
 
@@ -36,7 +36,7 @@ function ManagerLoader ( {bi, selected} ) {
             Base currency: {current_budget.base_ccy}
             <br></br>
             <br></br>
-            <ManageCategories categories={categories}/>
+            <ManageCategories categories={categories} budget={current_budget}/>
         </>
     
     
@@ -44,38 +44,52 @@ function ManagerLoader ( {bi, selected} ) {
 }
 
 
-export function Manager( bi ) {
-
+export function Manager( {bi, value = "", onChange} ) {
+    const [year, setYear] = useState(2023);
+    const [month, setMonth] = useState(1);
+    const [ccy, setCcy] = useState("USD");
+    const [amount, setAmount] = useState(0.0);
     const [displayBudget, setdisplayBudget] = useState({
             visible: false,
     		uuid: "",
     	});
     const [selectedBudget, setSelectedBudget] = useState(null);
     var selectableOptions = [];
-    if (typeof bi.budget_info[0] === 'string' || bi.budget_info[0] instanceof String) {
+    if (typeof bi[0] === 'string' || bi[0] instanceof String) {
         selectableOptions = [ {value: null, label: 'No budgets', selectedBudget: null} ]
     } else {
-        selectableOptions = bi.budget_info.map(
+        selectableOptions = bi.map(
                 (x => ({ 'value': x.uuid, 
                         'label': x.year + '-' + x.month })));
     }
-    const selectableYears = [ {value: '2023', label: '2023'},
-                            {value: '2024', label: '2024'},
-                            {value: '2025', label: '2025'},
-                            {value: '2026', label: '2026'},
-                            {value: '2027', label: '2027'}]  
-    const selectableMonths = [ {value: '1', label: 'January'},
-                            {value: '2', label: 'February'},
-                            {value: '3', label: 'March'},
-                            {value: '4', label: 'April'},
-                            {value: '5', label: 'May'},
-                            {value: '6', label: 'June'},
-                            {value: '7', label: 'July'},
-                            {value: '8', label: 'August'},
-                            {value: '9', label: 'September'},
-                            {value: '10', label: 'October'},
-                            {value: '11', label: 'November'},
-                            {value: '12', label: 'December'}]
+    
+    function updateCcy(event) {
+        setCcy(event.target.value);
+        if (typeof onChange === "function") {
+            onChange(event.target.value);
+        }
+    }
+    
+    function updateAmount(event) {
+        setAmount(event.target.value);
+        if (typeof onChange === "function") {
+            onChange(event.target.value);
+        }
+    }
+    
+    function updateYear(event) {
+        setYear(event.target.value);
+        if (typeof onChange === "function") {
+            onChange(event.target.value);
+        }
+    }
+    
+    function updateMonth(event) {
+        setMonth(event.target.value);
+        if (typeof onChange === "function") {
+            onChange(event.target.value);
+        }
+    }
                             
     const handleChange = () => {
 		setdisplayBudget({
@@ -89,18 +103,34 @@ export function Manager( bi ) {
 			<div className="settings">
     			<h1> Manage Budgets </h1>
     			
-    			<h2> Add new budget: </h2>
-    			<Select
-                    className="input-year"
-                    placeholder= "Select year"
-                    options={selectableYears}
-                  />
-                  <Select
-                    className="input-month"
-                    placeholder= "Select month"
-                    options={selectableMonths}
-                  />
-    			<button type ='button'>Add New</button>
+    			<h2> Add / update budget: </h2>
+    			<label htmlFor="year">Year:</label>
+    			<select name="year" id="year" onChange={updateYear}>
+        			<option value="2023">2023</option>
+        			<option value="2024">2024</option>
+        			<option value="2025">2025</option>
+        			<option value="2026">2026</option>
+                </select>
+                <label htmlFor="month">Month:</label>
+                <select name="month" id="month" onChange={updateMonth}>
+        			<option value="1">January</option>
+        			<option value="2">February</option>
+        			<option value="3">March</option>
+        			<option value="4">April</option>
+        			<option value="5">May</option>
+        			<option value="6">June</option>
+        			<option value="7">July</option>
+        			<option value="8">August</option>
+        			<option value="9">September</option>
+        			<option value="10">October</option>
+        			<option value="11">Novemeber</option>
+        			<option value="12">December</option>
+                </select>
+                <label htmlFor="new_budget_amount">Amount:</label>
+                <input type="number" id="new_budget_amount" name="new_budget_amount" defaultValue={0.0} onChange={updateAmount}/>
+                <label htmlFor="new_budget_ccy">Ccy::</label>
+                <input type="text" id="new_budget_ccy" name="new_budget_ccy" defaultValue="USD" onChange={updateCcy}/>
+    			<button type ='button' onClick={() => addBudget({amount, ccy, year, month})}>Add / Update</button>
     			<br/>
     			<br/>
     			
@@ -118,7 +148,7 @@ export function Manager( bi ) {
     			<br/>
     			<>
     			{displayBudget.visible ?
-                   <ManagerLoader bi={bi.budget_info} selected={selectedBudget}/>
+                   <ManagerLoader bi={bi} selected={selectedBudget}/>
                    :
                    null
                 }

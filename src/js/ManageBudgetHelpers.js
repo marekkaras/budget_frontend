@@ -32,3 +32,37 @@ export function deleteBudget( selected ) {
         return
     }
 }
+
+
+export function addBudget ( {amount, ccy, year, month} ) {
+    console.log(year);
+    year = parseInt(year);
+    month = parseInt(month);
+    console.log(year);
+
+    if (window.confirm('Are you sure you want to add / update this budget?')) {
+		var login_token = fetchToken();
+		let json_axios = axios.create({
+			headers: {
+				"content-type": "application/json",
+				Authorization: `Bearer ${login_token}`,
+			},
+		});
+		json_axios
+			.post("http://127.0.0.1:8045/add_budget_for_user/", {
+        			amount: amount,
+        			base_ccy: ccy,
+        			year: year,
+        			month: month})
+			.then(function (response) {
+				const parsed_response = JSON.stringify(response.data);
+				const json_response = JSON.parse(parsed_response);
+				console.log(json_response);
+			})
+			.catch(function (error) {
+				console.log(error, "error");
+			});
+    } else {
+        return
+    }
+}

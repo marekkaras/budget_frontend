@@ -60,9 +60,6 @@ function RenderNew ( {category, value = "", onChange} ) {
         }
     }
     
-    
-    console.log(category);
-    
     return (
         <>
             <label htmlFor="expense_date">Date:</label>
@@ -70,7 +67,7 @@ function RenderNew ( {category, value = "", onChange} ) {
             <label htmlFor="expense_name">Name: </label>
             <input type="text" id="expense_name" className="expense_name" onChange={updateName}/>
             <label htmlFor="expense_amount">Amount: </label>
-            <input type="text" id="expense_amount" className="expense_amount" onChange={updateAmount}/>
+            <input type="number" id="expense_amount" className="expense_amount" onChange={updateAmount}/>
             <label htmlFor="expense_base_ccy">Ccy: </label>
             <input type="text" id="expense_base_ccy" className="expense_base_ccy" onChange={updateBase}/>
             <label htmlFor="expense_exchange_rate">Rate: </label>
@@ -134,11 +131,11 @@ function RenderExpense ( { expense, value = "", onChange } ) {
             <label htmlFor="expense_name">Name: </label>
             <input type="text" id="expense_name" className="expense_name" placeholder={expense.name} onChange={updateName}/>
             <label htmlFor="expense_amount">Amount: </label>
-            <input type="text" id="expense_amount" className="expense_amount" placeholder={expense.amount} onChange={updateAmount}/>
+            <input type="number" id="expense_amount" className="expense_amount" placeholder={expense.amount} onChange={updateAmount}/>
             <label htmlFor="expense_base_ccy">Ccy: </label>
             <input type="text" id="expense_base_ccy" className="expense_base_ccy" placeholder={expense.base_ccy} onChange={updateBase}/>
             <label htmlFor="expense_amount_budget">Base amount [{expense.budget_ccy}]: </label>
-            <input type="text" id="expense_amount_budget" className="expense_amount_budget" value={expense.budget_amount} readOnly/>
+            <input type="number" id="expense_amount_budget" className="expense_amount_budget" value={expense.budget_amount} readOnly/>
             <label htmlFor="expense_exchange_rate">Rate: </label>
             <input type="text" id="expense_exchange_rate" className="expense_exchange_rate" placeholder={expense.exchange_rate} onChange={updateRate}/>
             <button type ='button' onClick={() => updateExpense({uuid, date, name, amount, baseCcy, exchangeRate})}>Update</button>

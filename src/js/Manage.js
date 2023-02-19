@@ -39,7 +39,7 @@ class ManageTab extends Component {
 				{this.state.loading ?
 				<p>loading</p>
 				:
-				<Manager budget_info={this.state.budget_info}/>
+				<Manager bi={this.state.budget_info}/>
 				}
 			</div>
 		);

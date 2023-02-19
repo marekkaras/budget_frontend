@@ -7,9 +7,19 @@ import { Manager } from "./ManageBudgets.js";
 class ManageTab extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { loading: true};
-		this.getBudgetsInfo();
+		this.state = { loading: true,
+                        budget_info: []};
+        this.getBudgetsInfo();
+		this.handler = this.handler.bind(this);
 	}
+	
+	handler() {
+        this.setState({
+          loading: true
+        })
+        this.getBudgetsInfo();
+      }
+
 
 	getBudgetsInfo = () => {
 		var self = this;
@@ -33,13 +43,14 @@ class ManageTab extends Component {
 			});
 	};
 	
+	
 	render() {
 		return (
 			<div>
 				{this.state.loading ?
 				<p>loading</p>
 				:
-				<Manager bi={this.state.budget_info}/>
+				<Manager bi={this.state.budget_info} handler={this.handler}/>
 				}
 			</div>
 		);

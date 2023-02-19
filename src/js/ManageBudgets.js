@@ -4,7 +4,7 @@ import { deleteBudget, addBudget } from "./ManageBudgetHelpers.js";
 import { ManageCategories } from "./ManageCategories.js";
 
 
-function ManagerLoader ( {bi, selected} ) {
+function ManagerLoader ( {stateChanger, bi, selected} ) {
 
     if (selected == null ) {
         return
@@ -36,7 +36,7 @@ function ManagerLoader ( {bi, selected} ) {
             Base currency: {current_budget.base_ccy}
             <br></br>
             <br></br>
-            <ManageCategories categories={categories} budget={current_budget}/>
+            <ManageCategories stateChanger={stateChanger} categories={categories} budget={current_budget}/>
         </>
     
     
@@ -44,7 +44,8 @@ function ManagerLoader ( {bi, selected} ) {
 }
 
 
-export function Manager( {bi, value = "", onChange} ) {
+export function Manager( {bi, handler, value = "", onChange} ) {
+
     const [year, setYear] = useState(2023);
     const [month, setMonth] = useState(1);
     const [ccy, setCcy] = useState("USD");
@@ -57,6 +58,7 @@ export function Manager( {bi, value = "", onChange} ) {
     var selectableOptions = [];
     if (typeof bi[0] === 'string' || bi[0] instanceof String) {
         selectableOptions = [ {value: null, label: 'No budgets', selectedBudget: null} ]
+        console.log('this')
     } else {
         selectableOptions = bi.map(
                 (x => ({ 'value': x.uuid, 
@@ -97,6 +99,10 @@ export function Manager( {bi, value = "", onChange} ) {
 			visible: true
 		});
 	};
+	
+	const stateChanger = () => {
+    	handler();
+	}
   
 	return (
 		<>
@@ -130,7 +136,7 @@ export function Manager( {bi, value = "", onChange} ) {
                 <input type="number" id="new_budget_amount" name="new_budget_amount" defaultValue={0.0} onChange={updateAmount}/>
                 <label htmlFor="new_budget_ccy">Ccy::</label>
                 <input type="text" id="new_budget_ccy" name="new_budget_ccy" defaultValue="USD" onChange={updateCcy}/>
-    			<button type ='button' onClick={() => addBudget({amount, ccy, year, month})}>Add / Update</button>
+    			<button type ='button' onClick={() => addBudget({stateChanger, amount, ccy, year, month})}>Add / Update</button>
     			<br/>
     			<br/>
     			
@@ -143,12 +149,12 @@ export function Manager( {bi, value = "", onChange} ) {
                     options={selectableOptions}
                   />
                 <button onClick={handleChange}>Display Selected</button>                
-                <button type ='button' onClick={() => deleteBudget({selectedBudget})}>Delete Selected</button>
+                <button type ='button' onClick={() => deleteBudget({stateChanger, selectedBudget})}>Delete Selected</button>
                 <br/>
     			<br/>
     			<>
     			{displayBudget.visible ?
-                   <ManagerLoader bi={bi} selected={selectedBudget}/>
+                   <ManagerLoader bi={bi} selected={selectedBudget} stateChanger={stateChanger}/>
                    :
                    null
                 }

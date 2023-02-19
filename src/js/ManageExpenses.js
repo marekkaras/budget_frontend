@@ -3,20 +3,20 @@ import { updateExpense, removeExpense, addExpense } from "./ManageExpensesHelper
 import "../css/expenses.css";
 
 
-export function ManageExpenses ( { expenses, category } ) {
+export function ManageExpenses ( { stateChanger, expenses, category } ) {
     return (
         <>
             {expenses.map((expense) => (
-                <RenderExpense key={expense.uuid} expense={expense}/>
+                <RenderExpense key={expense.uuid} expense={expense} stateChanger={stateChanger}/>
             ))}
-            <RenderNew category={category}/>
+            <RenderNew category={category} stateChanger={stateChanger}/>
         </>
         
     )
 
 }
 
-function RenderNew ( {category, value = "", onChange} ) {
+function RenderNew ( {stateChanger, category, value = "", onChange} ) {
     const uuid_budget = category.uuid_budget;
     const uuid_category = category.uuid;
     const [date, setDate] = useState("");
@@ -72,7 +72,7 @@ function RenderNew ( {category, value = "", onChange} ) {
             <input type="text" id="expense_base_ccy" className="expense_base_ccy" onChange={updateBase}/>
             <label htmlFor="expense_exchange_rate">Rate: </label>
             <input type="text" id="expense_exchange_rate" className="expense_exchange_rate" onChange={updateRate}/>
-            <button type ='button' onClick={() => addExpense({uuid_budget, uuid_category, date, name, amount, baseCcy, exchangeRate})}>Add New</button>
+            <button type ='button' onClick={() => addExpense({stateChanger, uuid_budget, uuid_category, date, name, amount, baseCcy, exchangeRate})}>Add New</button>
             <br></br>
         </>
         
@@ -80,7 +80,7 @@ function RenderNew ( {category, value = "", onChange} ) {
 }
 
 
-function RenderExpense ( { expense, value = "", onChange } ) {
+function RenderExpense ( { stateChanger, expense, value = "", onChange } ) {
 
     const [date, setDate] = useState(expense.date);
     const [name, setName] = useState(expense.name);
@@ -138,8 +138,8 @@ function RenderExpense ( { expense, value = "", onChange } ) {
             <input type="number" id="expense_amount_budget" className="expense_amount_budget" value={expense.budget_amount} readOnly/>
             <label htmlFor="expense_exchange_rate">Rate: </label>
             <input type="text" id="expense_exchange_rate" className="expense_exchange_rate" placeholder={expense.exchange_rate} onChange={updateRate}/>
-            <button type ='button' onClick={() => updateExpense({uuid, date, name, amount, baseCcy, exchangeRate})}>Update</button>
-            <button type ='button' onClick={() => removeExpense({uuid})}>Delete</button>
+            <button type ='button' onClick={() => updateExpense({stateChanger, uuid, date, name, amount, baseCcy, exchangeRate})}>Update</button>
+            <button type ='button' onClick={() => removeExpense({stateChanger, uuid})}>Delete</button>
             <br></br>
             
         </>

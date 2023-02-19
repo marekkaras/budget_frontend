@@ -2,7 +2,7 @@ import axios from "axios";
 import { fetchToken } from "./Auth.js";
 
 
-export function updateCategory ( {cat_uuid, name, amount} ) {
+export function updateCategory ( {stateChanger, cat_uuid, name, amount} ) {
 
     if (window.confirm('Are you sure you want to update this category?')) {
 		var login_token = fetchToken();
@@ -21,6 +21,7 @@ export function updateCategory ( {cat_uuid, name, amount} ) {
 				const parsed_response = JSON.stringify(response.data);
 				const json_response = JSON.parse(parsed_response);
 				console.log(json_response);
+				stateChanger();
 			})
 			.catch(function (error) {
 				console.log(error, "error");
@@ -31,7 +32,7 @@ export function updateCategory ( {cat_uuid, name, amount} ) {
 }
 
 
-export function addCategory ( {username, uuid_budget, name, amount} ) {
+export function addCategory ( {stateChanger, username, uuid_budget, name, amount} ) {
 
     if (window.confirm('Are you sure you want to add this category?')) {
 		var login_token = fetchToken();
@@ -51,6 +52,7 @@ export function addCategory ( {username, uuid_budget, name, amount} ) {
 				const parsed_response = JSON.stringify(response.data);
 				const json_response = JSON.parse(parsed_response);
 				console.log(json_response);
+				stateChanger();
 			})
 			.catch(function (error) {
 				console.log(error, "error");
@@ -61,7 +63,7 @@ export function addCategory ( {username, uuid_budget, name, amount} ) {
 }
 
 
-export function removeCategory ( {cat_uuid} ) {
+export function removeCategory ( {stateChanger, cat_uuid} ) {
 
     if (window.confirm('Are you sure you want to delete this category?')) {
 		var login_token = fetchToken();
@@ -78,6 +80,7 @@ export function removeCategory ( {cat_uuid} ) {
 				const parsed_response = JSON.stringify(response.data);
 				const json_response = JSON.parse(parsed_response);
 				console.log(json_response);
+				stateChanger();
 			})
 			.catch(function (error) {
 				console.log(error, "error");

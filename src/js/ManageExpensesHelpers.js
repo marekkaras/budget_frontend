@@ -2,7 +2,7 @@ import axios from "axios";
 import { fetchToken } from "./Auth.js";
 
 
-export function updateExpense ( {uuid, date, name, amount, baseCcy, exchangeRate } ) {
+export function updateExpense ( {stateChanger, uuid, date, name, amount, baseCcy, exchangeRate } ) {
 
     if (window.confirm('Are you sure you want to update this expense?')) {
 		var login_token = fetchToken();
@@ -24,6 +24,7 @@ export function updateExpense ( {uuid, date, name, amount, baseCcy, exchangeRate
 				const parsed_response = JSON.stringify(response.data);
 				const json_response = JSON.parse(parsed_response);
 				console.log(json_response);
+				stateChanger();
 			})
 			.catch(function (error) {
 				console.log(error, "error");
@@ -33,7 +34,7 @@ export function updateExpense ( {uuid, date, name, amount, baseCcy, exchangeRate
     }
 }
 
-export function addExpense ( {uuid_budget, uuid_category, date, name, amount, baseCcy, exchangeRate } ) {
+export function addExpense ( {stateChanger, uuid_budget, uuid_category, date, name, amount, baseCcy, exchangeRate } ) {
 
     if (window.confirm('Are you sure you want to update this expense?')) {
 		var login_token = fetchToken();
@@ -56,6 +57,7 @@ export function addExpense ( {uuid_budget, uuid_category, date, name, amount, ba
 				const parsed_response = JSON.stringify(response.data);
 				const json_response = JSON.parse(parsed_response);
 				console.log(json_response);
+				stateChanger();
 			})
 			.catch(function (error) {
 				console.log(error, "error");
@@ -66,7 +68,7 @@ export function addExpense ( {uuid_budget, uuid_category, date, name, amount, ba
 }
 
 
-export function removeExpense ( {uuid} ) {
+export function removeExpense ( {stateChanger, uuid} ) {
 
     if (window.confirm('Are you sure you want to delete this expense?')) {
 		var login_token = fetchToken();
@@ -83,6 +85,7 @@ export function removeExpense ( {uuid} ) {
 				const parsed_response = JSON.stringify(response.data);
 				const json_response = JSON.parse(parsed_response);
 				console.log(json_response);
+				stateChanger();
 			})
 			.catch(function (error) {
 				console.log(error, "error");

@@ -92,7 +92,9 @@ function SignUpBox() {
       return;
     } else {
       let urlencoded_axios = axios.create({
-        headers: { "content-type": "application/x-www-form-urlencoded" },
+        headers: {
+          "content-type": "application/x-www-form-urlencoded",
+        },
       });
       urlencoded_axios
         .post("http://127.0.0.1:8045/token", {

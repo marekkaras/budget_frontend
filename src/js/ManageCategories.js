@@ -60,7 +60,13 @@ function NewCategory({ stateChanger, budget, value = "", onChange }) {
       <button
         type="button"
         onClick={() =>
-          addCategory({ stateChanger, username, uuid_budget, name, amount })
+          addCategory({
+            stateChanger,
+            username,
+            uuid_budget,
+            name,
+            amount,
+          })
         }
       >
         Add New

@@ -161,7 +161,10 @@ export function Manager({
         <button
           type="button"
           onClick={() =>
-            deleteBudget({ stateChangerRemoveBudget, selectedBudget })
+            deleteBudget({
+              stateChangerRemoveBudget,
+              selectedBudget,
+            })
           }
         >
           Delete Selected

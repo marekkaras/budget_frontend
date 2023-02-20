@@ -1,39 +1,38 @@
 .settings {
-    font-size: large;
-    position: absolute;
-    margin-left: 22%;
-    padding: 2em 1em 1em 1em;
+  font-size: large;
+  position: absolute;
+  margin-left: 22%;
+  padding: 2em 1em 1em 1em;
 }
 
 .settings section {
-    display: flex;
-    flex-flow: column nowrap;
+  display: flex;
+  flex-flow: column nowrap;
 }
 
 .settings p {
-    text-align: left;
+  text-align: left;
 }
 
 .settings select {
-    align-self: center;
-    background: white;
-    width: 75%;
-    margin: 0.5em;
-    padding-left: 1em;
+  align-self: center;
+  background: white;
+  width: 75%;
+  margin: 0.5em;
+  padding-left: 1em;
 }
 
 .user_currencies label {
-    font-size: medium;
-    margin-left:  -14em;
-
+  font-size: medium;
+  margin-left: -14em;
 }
 
 .currency_format input {
-    float: left;
+  float: left;
 }
 
 .currency_format label {
-    font-size: small;
-    text-align: left;
-    margin: 0.2em;
+  font-size: small;
+  text-align: left;
+  margin: 0.2em;
 }

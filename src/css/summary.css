@@ -1,32 +1,33 @@
-.summaryPlot{
-    max-width: 100%;
-    max-height: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr; 
-    margin: 20px;
+.summaryPlot {
+  max-width: 100%;
+  max-height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 20px;
 }
 
-.categoriesTableDiv{
-    align-self: center;
+.categoriesTableDiv {
+  align-self: center;
 }
 
-.categoriesTable td, .categoriesTable th{
-    border: 1px solid #ddd;
-    padding: 3px;
+.categoriesTable td,
+.categoriesTable th {
+  border: 1px solid #ddd;
+  padding: 3px;
 }
 
-.categoriesTable tr:nth-child(even){
-    background-color: #D1DEDE;
+.categoriesTable tr:nth-child(even) {
+  background-color: #d1dede;
 }
 
 .categoriesTable tr:hover {
-    background-color: #4B6858;
+  background-color: #4b6858;
 }
 
 .categoriesTable th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #3185FC;
+  background-color: #3185fc;
   color: white;
 }

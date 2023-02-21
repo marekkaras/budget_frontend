@@ -1,34 +1,34 @@
 .settings {
-    text-align: center;
+  text-align: center;
 }
 
 .conversionTypes {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .toggleTitles {
-    display: flex;
+  display: flex;
 }
 
 .toggleTitles span {
-    margin: 0 1em;
+  margin: 0 1em;
 }
 
 .toggleTitles span[id="auto"] {
-    float: left;
+  float: left;
 }
 
 .toggleTitles span[id="manual"] {
-    float: right;
+  float: right;
 }
 
 .userCurrencies {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .userCurrencies input {
-    margin-left: 2em;
-    float: right;
+  margin-left: 2em;
+  float: right;
 }

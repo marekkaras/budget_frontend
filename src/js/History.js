@@ -1,96 +1,89 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { fetchToken } from "./Auth.js";
 import "../css/history.css";
 
-class HistoryTab extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-    this.getBudgetsInfo();
-  }
+export default function HistoryTab() {
+  // Declare state variable for data
+  const [userData, setUserData] = useState();
 
-  getBudgetsInfo = () => {
-    var self = this;
-    var login_token = fetchToken();
-    let json_axios = axios.create({
-      headers: {
-        "content-type": "application/json",
-        Authorization: `Bearer ${login_token}`,
-      },
-    });
-    json_axios
+  // Fetch data with useEffect hook + store in state variable
+  useEffect(() => {
+    setUserData(() => {
+      var login_token = fetchToken();
+      let json_axios = axios.create({
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${login_token}`,
+        },
+      });
+      json_axios
       .post("http://127.0.0.1:8045/get_user_history/")
       .then(function (response) {
         const parsed_response = JSON.stringify(response.data);
         const json_response = JSON.parse(parsed_response);
-        console.log(json_response);
-        self.setState({ budget_info: json_response });
+        console.log('User data successfully loaded: ', json_response);
+        setUserData(json_response[0]);
       })
       .catch(function (error) {
         console.log(error, "error");
       });
-  };
+    })
+    // The [] ensures data is fetched only once (not every page render)
+  }, []);
 
-  render() {
-    return (
-      <div>
-        <h2> History </h2>
-        <History />
-      </div>
-    );
+  function HistoryTable() {
+    // Ensuring userData is loaded (not null/undefined/etc.)
+    if(userData) {
+      // Using map() to create new array with desired data
+      const historyData = userData.categories.map(category => {
+        return ( category.expenses.map(expense => {
+          const data = {
+            "id": expense.id,
+            "name": expense.name,
+            "date": expense.date,
+            "category": category.category_name,
+            "amount": expense.amount
+          }
+          return data;
+        }) );
+      });
+
+      return (
+        <table>
+          <tbody>
+            <tr>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Category</th>
+              <th>Notes</th>
+            </tr>
+            { historyData.flat().map(item => {
+              return(
+                <tr key={item.id}>
+                  <td>{item.date}</td>
+                  <td>{item.amount}</td>
+                  <td>{item.category}</td>
+                  <td>{item.name}</td>
+                </tr>
+              );
+            }) }
+          </tbody>
+        </table>
+      )
+    }
   }
-}
 
-export default HistoryTab;
-
-function History() {
-  return (
-    <>
-      <div className="history">
-        <section className="datePicker">
-          <label htmlFor="historyDate"></label>
-          {/* TODO: customize datepicker as per survey results */}
-          <input type="month" id="historyDate" value="2023-02" readOnly></input>
-        </section>
-        <section className="historyTable">
-          <table>
-            <tbody>
-              <tr>
-                <th>Date</th>
-                <th>Amount</th>
-                <th>Category</th>
-                <th>Notes</th>
-              </tr>
-              {/* TODO: iterate through table in database + display here */}
-              <tr>
-                <td>06/02/2023</td>
-                <td>$0.25</td>
-                <td>Luxuries</td>
-                <td>For good luck!For good luck!</td>
-              </tr>
-              <tr>
-                <td>06/02/2023</td>
-                <td>$0.25</td>
-                <td>Luxuries</td>
-                <td>For good luck!For good luck!</td>
-              </tr>
-              <tr>
-                <td>06/02/2023</td>
-                <td>$0.25</td>
-                <td>Luxuries</td>
-                <td>For good luck!For good luck!</td>
-              </tr>
-              <tr>
-                <td>06/02/2023</td>
-                <td>$0.25</td>
-                <td>Luxuries</td>
-                <td>For good luck!For good luck!</td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-      </div>
-    </>
+	return (
+			<div>
+				<h2> History </h2>
+				<section className="datePicker">
+					<label htmlFor="historyDate"></label>
+					<input type="month" id="historyDate"></input>
+				</section>
+				<section className="historyTable">
+              <HistoryTable />
+				</section>
+			</div>
   );
 }

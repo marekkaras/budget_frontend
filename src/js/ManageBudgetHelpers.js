@@ -2,7 +2,6 @@ import axios from "axios";
 import { fetchToken } from "./Auth.js";
 
 export function deleteBudget({ stateChangerRemoveBudget, selectedBudget }) {
-  console.log(selectedBudget);
   if (selectedBudget === null || selectedBudget === undefined) {
     return;
   }

@@ -42,7 +42,7 @@ function NewCategory({ stateChanger, budget, value = "", onChange }) {
   }
 
   return (
-    <>
+    <div data-testid="new-category">
       <b>Category: </b>
       <input
         type="text"
@@ -73,7 +73,7 @@ function NewCategory({ stateChanger, budget, value = "", onChange }) {
       </button>
       <br></br>
       <br></br>
-    </>
+    </div>
   );
 }
 
@@ -98,7 +98,7 @@ function RenderCategory({ stateChanger, category, value = "", onChange }) {
   }
 
   return (
-    <>
+    <div data-testid="category">
       <b>Category: </b>
       <input
         type="text"
@@ -134,6 +134,6 @@ function RenderCategory({ stateChanger, category, value = "", onChange }) {
         stateChanger={stateChanger}
       />
       <br></br>
-    </>
+    </div>
   );
 }

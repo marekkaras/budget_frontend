@@ -111,26 +111,68 @@ export function Manager({
       <div className="settings">
         <h2> Add / update budget: </h2>
         <label htmlFor="year">Year:</label>
-        <select name="year" id="year" onChange={updateYear}>
-          <option value="2023">2023</option>
-          <option value="2024">2024</option>
-          <option value="2025">2025</option>
-          <option value="2026">2026</option>
+        <select
+          data-testid="year-selector"
+          name="year"
+          id="year"
+          onChange={updateYear}
+        >
+          <option data-testid="year-option" value="2023">
+            2023
+          </option>
+          <option data-testid="year-option" value="2024">
+            2024
+          </option>
+          <option data-testid="year-option" value="2025">
+            2025
+          </option>
+          <option data-testid="year-option" value="2026">
+            2026
+          </option>
         </select>
         <label htmlFor="month">Month:</label>
-        <select name="month" id="month" onChange={updateMonth}>
-          <option value="1">January</option>
-          <option value="2">February</option>
-          <option value="3">March</option>
-          <option value="4">April</option>
-          <option value="5">May</option>
-          <option value="6">June</option>
-          <option value="7">July</option>
-          <option value="8">August</option>
-          <option value="9">September</option>
-          <option value="10">October</option>
-          <option value="11">Novemeber</option>
-          <option value="12">December</option>
+        <select
+          data-testid="month-selector"
+          name="month"
+          id="month"
+          onChange={updateMonth}
+        >
+          <option data-testid="month-option" value="1">
+            January
+          </option>
+          <option data-testid="month-option" value="2">
+            February
+          </option>
+          <option data-testid="month-option" value="3">
+            March
+          </option>
+          <option data-testid="month-option" value="4">
+            April
+          </option>
+          <option data-testid="month-option" value="5">
+            May
+          </option>
+          <option data-testid="month-option" value="6">
+            June
+          </option>
+          <option data-testid="month-option" value="7">
+            July
+          </option>
+          <option data-testid="month-option" value="8">
+            August
+          </option>
+          <option data-testid="month-option" value="9">
+            September
+          </option>
+          <option data-testid="month-option" value="10">
+            October
+          </option>
+          <option data-testid="month-option" value="11">
+            Novemeber
+          </option>
+          <option data-testid="month-option" value="12">
+            December
+          </option>
         </select>
         <label htmlFor="new_budget_amount">Amount:</label>
         <input

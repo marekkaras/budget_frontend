@@ -66,7 +66,7 @@ function RenderNew({ stateChanger, category, value = "", onChange }) {
   }
 
   return (
-    <>
+    <div data-testid="new-expense">
       <label htmlFor="expense_date">Date:</label>
       <input
         type="text"
@@ -104,6 +104,7 @@ function RenderNew({ stateChanger, category, value = "", onChange }) {
       />
       <button
         type="button"
+        name="add"
         onClick={() =>
           addExpense({
             stateChanger,
@@ -120,7 +121,7 @@ function RenderNew({ stateChanger, category, value = "", onChange }) {
         Add New
       </button>
       <br></br>
-    </>
+    </div>
   );
 }
 
@@ -168,7 +169,7 @@ function RenderExpense({ stateChanger, expense, value = "", onChange }) {
   }
 
   return (
-    <>
+    <div data-testid="expense">
       <label htmlFor="expense_date">Date:</label>
       <input
         type="text"
@@ -221,6 +222,7 @@ function RenderExpense({ stateChanger, expense, value = "", onChange }) {
       />
       <button
         type="button"
+        name="update"
         onClick={() =>
           updateExpense({
             stateChanger,
@@ -237,11 +239,12 @@ function RenderExpense({ stateChanger, expense, value = "", onChange }) {
       </button>
       <button
         type="button"
+        name="delete"
         onClick={() => removeExpense({ stateChanger, uuid })}
       >
         Delete
       </button>
       <br></br>
-    </>
+    </div>
   );
 }

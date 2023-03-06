@@ -30,9 +30,22 @@ export class SignUpPopUp extends React.Component {
 
 // Inner model class component
 class SignUp extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { error_msg: "" };
+    this.handler = this.handler.bind(this);
+  }
+
+
   handleClick = () => {
     this.props.toggle();
   };
+  
+  handler( text ) {
+    this.setState({
+      error_msg: text,
+    });
+  }
 
   render() {
     return (
@@ -41,7 +54,10 @@ class SignUp extends Component {
           <span className="close" onClick={this.handleClick}>
             &times;
           </span>
-          <SignUpBox />
+          <SignUpBox handler={this.handler}/>
+          <div className="modal_error_message">
+          <p>{this.state.error_msg}</p>
+          </div>
         </div>
       </div>
     );
@@ -49,7 +65,7 @@ class SignUp extends Component {
 }
 
 // Login function rendering all controls and processing everything
-function SignUpBox() {
+function SignUpBox( {handler}) {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -63,6 +79,7 @@ function SignUpBox() {
       full_name === "" &&
       email === ""
     ) {
+      handler("Missing required data");
       return;
     } else {
       let json_axios = axios.create({
@@ -82,7 +99,7 @@ function SignUpBox() {
           }
         })
         .catch(function (error) {
-          console.log(error, "error");
+          handler(error.response.data.detail);
         });
     }
   };

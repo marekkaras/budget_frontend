@@ -30,9 +30,21 @@ export class LoginPopUp extends React.Component {
 
 // Inner model class component
 class PopUpLogin extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { error_msg: "" };
+    this.handler = this.handler.bind(this);
+  }
+  
   handleClick = () => {
     this.props.toggle();
   };
+  
+  handler( text ) {
+    this.setState({
+      error_msg: text,
+    });
+  }
 
   render() {
     return (
@@ -41,7 +53,10 @@ class PopUpLogin extends Component {
           <span className="close" onClick={this.handleClick}>
             &times;
           </span>
-          <LoginBox />
+          <LoginBox handler={this.handler}/>
+          <div className="modal_error_message">
+          <p>{this.state.error_msg}</p>
+          </div>
         </div>
       </div>
     );
@@ -49,7 +64,7 @@ class PopUpLogin extends Component {
 }
 
 // Login function rendering all controls and processing everything
-function LoginBox() {
+function LoginBox( { handler } ) {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -75,8 +90,7 @@ function LoginBox() {
           }
         })
         .catch(function (error) {
-          // Do some error processing here
-          console.log(error, "error");
+          handler(error.response.data.detail);
         });
     }
   };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import axios from "axios";
 import { fetchToken } from "./Auth.js";
 import "../css/history.css";
@@ -6,16 +6,15 @@ import "../css/history.css";
 export default function HistoryTab() {
   // Declare state variables
   const [userData, setUserData] = useState();
-  const [budgetDate, setBudgetDate] = useState("2023-01-01");
+  const [budgetDate, setBudgetDate] = useState(0);
 
   const updateDate = (event) => {
     setBudgetDate(event.target.value);
   }
-
-  // Fetch data with useEffect hook + store in state variable
-  useEffect(() => {
-    setUserData(() => {
-      var login_token = fetchToken();
+  
+  // Cache user data using useMemo
+  useMemo(() => {
+    var login_token = fetchToken();
       let json_axios = axios.create({
         headers: {
           "content-type": "application/json",
@@ -33,10 +32,10 @@ export default function HistoryTab() {
       .catch(function (error) {
         console.log(error, "error");
       });
-    })
-    // The [] ensures data is fetched only once (not every page render)
+    // The [] ensures it only runs once
   }, []);
 
+  // *-- Helper functions --*
   function compareDates(dateStringA, dateStringB) {
     // Splitting date string for backwards compatibility
     const [year1, month1, date1] = dateStringA.split('-');
@@ -58,98 +57,97 @@ export default function HistoryTab() {
     return String(year) + "-" + monthString + "-01";
   }
 
-  function HistoryTable() {
-    // Ensuring userData is loaded (not null/undefined/etc.)
-    if(userData) {
-      // Ensuring budgetDate is loaded (not null/undefined/etc.)
-      if (budgetDate) {
-        const selectedBudget = userData.map((budget, index) => {
-          const dateString = stringifyMonth(budget.year, budget.month);
-          if (compareDates(dateString, budgetDate) === 0) {
-            return index;
+  // *-- Renderer functions --*
+  function HistoryTable(props) {
+    // Ensuring budgetDate is loaded
+    if (props.selectedBudget !== undefined) {
+      // Extracting desired data from selected budget
+      let historyData = userData[props.selectedBudget].categories.map(category => {
+        return ( category.expenses.map(expense => {
+          const data = {
+            "id": expense.id,
+            "name": expense.name,
+            "date": expense.date,
+            "category": category.category_name,
+            "amount": expense.amount
           }
-        });
+          return data;
+        }) );
+      });
 
-        // Extracting desired data from selected budget
-        let historyData = userData[selectedBudget].categories.map(category => {
-          return ( category.expenses.map(expense => {
-            const data = {
-              "id": expense.id,
-              "name": expense.name,
-              "date": expense.date,
-              "category": category.category_name,
-              "amount": expense.amount
-            }
-            return data;
-          }) );
-        });
+      // Arranging table by date (newest -> oldest)
+      historyData = historyData.flat().sort(
+        (dataObjA, dataObjB) => { return compareDates(dataObjA.date, dataObjB.date); }
+        );
 
-        // Arranging table by date (newest -> oldest)
-        historyData = historyData.flat().sort(
-          (dataObjA, dataObjB) => { return compareDates(dataObjA.date, dataObjB.date); }
-          );
-  
-        return (
-          <table>
-            <tbody>
-              <tr>
-                <th>Date</th>
-                <th>Amount</th>
-                <th>Category</th>
-                <th>Notes</th>
-              </tr>
-              { historyData.flat().map(item => {
-                return(
-                  <tr key={item.id}>
-                    <td>{item.date}</td>
-                    <td>{item.amount}</td>
-                    <td>{item.category}</td>
-                    <td>{item.name}</td>
-                  </tr>
-                );
-              }) }
-            </tbody>
-          </table>
-        ) //end return
-      } //end if(budgetData)
-    } //end if(userData)
+      return (
+        <table>
+          <tbody>
+            <tr>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Category</th>
+              <th>Notes</th>
+            </tr>
+            { historyData.flat().map(item => {
+              return(
+                <tr key={item.id}>
+                  <td>{item.date}</td>
+                  <td>{item.amount}</td>
+                  <td>{item.category}</td>
+                  <td>{item.name}</td>
+                </tr>
+              );
+            }) }
+          </tbody>
+        </table>
+      ); //end return
+    } //end if
   } //end function
 
   function BudgetPicker() {
-    if (userData){
-      let budgetDates = userData.map(budget => {
-        return ({
-          "id": budget.id,
-          "year": budget.year,
-          "month": budget.month 
-        });
-      })
-    
-      return (
-        <>
-          <label htmlFor="budgetSelect"></label>
-          <select id="budgetSelect" value={budgetDate} onChange={updateDate}>
-            {budgetDates.map(budget => {
-              const dateString = stringifyMonth(budget.year, budget.month);
-              return (
-                <option key={budget.id} value={dateString}>{dateString}</option>
-              );
-            })}
-          </select>
-        </>
-      )
-    }
+    let budgetDates = userData.map((budget, index) => {
+      return ({
+        "index": index,
+        "id": budget.id,
+        "year": budget.year,
+        "month": budget.month 
+      });
+    })
+  
+    return (
+      <>
+        <label htmlFor="budgetSelect"></label>
+        <select id="budgetSelect" value={budgetDate} onChange={updateDate}>
+          {budgetDates.map(customObj => {
+            const dateString = stringifyMonth(customObj.year, customObj.month);
+            return (
+              <option key={customObj.id} value={customObj.index}>{dateString}</option>
+            );
+          })}
+        </select>
+      </>
+    )
   }
-
-	return (
-			<div>
-				<h2> History </h2>
-				<section className="datePicker">
+  
+  // Ensuring userData is loaded (not null/undefined/etc.)
+  if (userData) {
+    if (userData[0] === "No user budgets found") return (
+      <>
+        <h2> History </h2>
+        <p>No expenses recorded</p>
+      </>
+    );
+    else return (
+      <>
+        <h2> History </h2>
+        <section className="datePicker">
           <BudgetPicker />
-				</section>
-				<section className="historyTable">
-          <HistoryTable />
-				</section>
-			</div>
-  );
-}
+        </section>
+        <section className="historyTable">
+          <HistoryTable selectedBudget={budgetDate}/>
+        </section>
+      </>
+    );
+  } // end if
+} // end component

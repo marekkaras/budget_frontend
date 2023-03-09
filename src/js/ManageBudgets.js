@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../css/manage.css";
-import Select from "react-select";
+import { BudgetPicker } from "./BudgetPicker";
 import { deleteBudget, addBudget } from "./ManageBudgetHelpers.js";
 import { ManageCategories } from "./ManageCategories.js";
 
@@ -214,9 +214,10 @@ export function Manager({
         >
           Delete Selected
         </button>
-        <Select
+
+        <BudgetPicker
           className="input-cont"
-          placeholder="Select budget"
+          placeholder="Select a budget"
           defaultValue={selectedBudget}
           onChange={setSelectedBudget}
           options={selectableOptions}

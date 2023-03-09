@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../css/manage.css";
 import Select from "react-select";
 import { deleteBudget, addBudget } from "./ManageBudgetHelpers.js";
 import { ManageCategories } from "./ManageCategories.js";
@@ -192,6 +193,7 @@ export function Manager({
         />
         <button
           type="button"
+          className="add-button"
           onClick={() => addBudget({ stateChanger, amount, ccy, year, month })}
         >
           Add / Update
@@ -202,6 +204,7 @@ export function Manager({
         <h2> Manage budgets: </h2>
         <button
           type="button"
+          className="delete-button"
           onClick={() =>
             deleteBudget({
               stateChangerRemoveBudget,

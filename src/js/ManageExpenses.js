@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../css/manage.css";
 import {
   updateExpense,
   removeExpense,
@@ -104,6 +105,7 @@ function RenderNew({ stateChanger, category, value = "", onChange }) {
       />
       <button
         type="button"
+        className="add-button"
         name="add"
         onClick={() =>
           addExpense({
@@ -222,6 +224,7 @@ function RenderExpense({ stateChanger, expense, value = "", onChange }) {
       />
       <button
         type="button"
+        className="update-button"
         name="update"
         onClick={() =>
           updateExpense({
@@ -239,6 +242,7 @@ function RenderExpense({ stateChanger, expense, value = "", onChange }) {
       </button>
       <button
         type="button"
+        className="delete-button"
         name="delete"
         onClick={() => removeExpense({ stateChanger, uuid })}
       >

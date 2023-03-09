@@ -1,0 +1,80 @@
+/* Style for category and new category inputs */
+input {
+  padding: 4px;
+  margin: 2px;
+  border-radius: 4px;
+  border: 1px solid gray;
+}
+
+/* Common styles for all buttons  */
+.add-button, .update-button, .delete-button {
+padding: 8px 15px;
+text-align: center;
+cursor: pointer;
+outline: none;
+color: #fff;
+border: none;
+border-radius: 10px;
+box-shadow: 0 5px #999999a5;
+margin: 8px 5px;
+width: 8%;
+min-width: 80px;
+}
+
+.add-button:active, .update-button:active, .delete-button:active {
+  box-shadow: 0 2px #999999a5;
+  transform: translateY(3px);
+}
+
+/* Background for add and update buttons */
+.add-button, .update-button {
+    background-color: #1316e3;
+}
+
+.add-button:hover, .update-button:hover {
+  background-color: #0a0c6c;
+}
+
+/* Background for the delete button */
+.delete-button {
+  background-color: #b20c00;
+}
+
+.delete-button:hover {
+  background-color: #740800;
+}
+
+/* Style for the category title */
+.category-title {
+  font-weight: bold;
+  margin: 4px;
+  display: inline-block;
+  width: 80px; 
+  margin-right: 10px; 
+}
+
+/* Style for the ManageExpenses component */
+.ExpenseTable {
+  border-collapse: collapse;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.ExpenseTable th,
+.ExpenseTable td {
+  border: 1px solid gray;
+  padding: 4px;
+}
+
+.ExpenseTable th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.ExpenseTable tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.ExpenseTable tr:hover {
+  background-color: #ddd;
+}

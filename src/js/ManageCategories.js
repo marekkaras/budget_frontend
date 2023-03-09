@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../css/manage.css";
 import {
   updateCategory,
   removeCategory,
@@ -43,7 +44,7 @@ function NewCategory({ stateChanger, budget, value = "", onChange }) {
 
   return (
     <div data-testid="new-category">
-      <b>Category: </b>
+      <p className="category-title">Category: </p>
       <input
         type="text"
         id="new_cat_name"
@@ -59,6 +60,7 @@ function NewCategory({ stateChanger, budget, value = "", onChange }) {
       {budget.base_ccy}
       <button
         type="button"
+        className="add-button"
         onClick={() =>
           addCategory({
             stateChanger,
@@ -99,7 +101,7 @@ function RenderCategory({ stateChanger, category, value = "", onChange }) {
 
   return (
     <div data-testid="category">
-      <b>Category: </b>
+      <p className="category-title">Category: </p>
       <input
         type="text"
         id="category_name"
@@ -117,12 +119,14 @@ function RenderCategory({ stateChanger, category, value = "", onChange }) {
       {category.base_ccy}
       <button
         type="button"
+        className="update-button"
         onClick={() => updateCategory({ stateChanger, cat_uuid, name, amount })}
       >
         Update
       </button>
       <button
         type="button"
+        className="delete-button"
         onClick={() => removeCategory({ stateChanger, cat_uuid })}
       >
         Delete

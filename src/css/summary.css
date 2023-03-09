@@ -7,13 +7,16 @@
 }
 
 .categoriesTableDiv {
-  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .categoriesTable td,
 .categoriesTable th {
   border: 1px solid #ddd;
   padding: 3px;
+  text-align: center;
 }
 
 .categoriesTable tr:nth-child(even) {
@@ -27,7 +30,7 @@
 .categoriesTable th {
   padding-top: 12px;
   padding-bottom: 12px;
-  text-align: left;
+  text-align: center;
   background-color: #3185fc;
   color: white;
 }

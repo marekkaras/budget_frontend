@@ -69,7 +69,7 @@ class SummaryTab extends Component {
 
   categoriesTable = () => {
     try {
-      const categoryData = this.state.categorySummary[0].categories.map(
+      const categoryData = this.state.categorySummary[this.state.budgetDate].categories.map(
         (category) => {
           const data = {
             id: category.id,
@@ -82,7 +82,7 @@ class SummaryTab extends Component {
       );
 
       return (
-        <table id="categoriesTable">
+        <table id="categoriesTable" className="categoriesTable">
           <tbody>
             <tr>
               <th>Category</th>
@@ -112,17 +112,17 @@ class SummaryTab extends Component {
 
   categoriesPieChart = () => {
     try {
-      const labels = this.state.categorySummary[0].categories.map(
+      const labels = this.state.categorySummary[this.state.budgetDate].categories.map(
         (category) => {
           return category.category_name;
         }
       );
 
-      const data = this.state.categorySummary[0].categories.map((category) => {
+      const data = this.state.categorySummary[this.state.budgetDate].categories.map((category) => {
         return category.spent;
       });
 
-      const numCategories = this.state.categorySummary[0].categories.length;
+      const numCategories = this.state.categorySummary[this.state.budgetDate].categories.length;
       const colors = generateColors(numCategories);
 
       const chartData = {
@@ -135,7 +135,9 @@ class SummaryTab extends Component {
         ],
       };
 
-      return <Pie data={chartData} />;
+      return <Pie data={chartData} 
+                  width={100}
+                  height={50}/>;
     } catch (error) {
       if (error.message.includes("is undefined") === true) {
         return;
@@ -162,11 +164,12 @@ class SummaryTab extends Component {
           id="budgetSelect"
           value={this.state.budgetDate}
           onChange={this.updateDate}
+          className="dropdownSelector"
         >
           {budgetDates.map((budget) => {
             const dateString = this.stringifyMonth(budget.year, budget.month);
             return (
-              <option key={budget.id} value={dateString}>
+              <option key={budget.id} value={budget.index}>
                 {dateString}
               </option>
             );
@@ -191,14 +194,16 @@ class SummaryTab extends Component {
             <h2> Monthly Summary </h2>
             <div className="summary">
               <section className="datePicker">{this.budgetPicker()}</section>
+              <div className="categoriesTableDiv">
+                  {this.categoriesTable()}
+                </div>
+              <section className="summaryPlotWrapper">
               <section className="summaryPlot">
                 <div className="plotImg">
                   {/* Display plot of current budget situation */}
                   {this.categoriesPieChart()}
                 </div>
-                <div className="categoriesTableDiv">
-                  {this.categoriesTable()}
-                </div>
+              </section>
               </section>
             </div>
           </div>

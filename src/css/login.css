@@ -1,0 +1,46 @@
+body {background-color: #FEF6EC;} 
+ 
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.mainSection {
+  align-items: center;
+  width: 100%;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+}
+
+.loginSection {
+  align-items: center;
+  width: 25%;
+  height: 100%;
+  display: flex;
+  justify-content: right;
+}
+
+.signUpSection {
+  align-items: center;
+  width: 25%;
+  height: 100%;
+  display: flex;
+  justify-content: left;
+}
+
+.logoSection {
+  align-items: center;
+  width: 600px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.loginButton {
+  align-items: center;
+  margin-top: 20px;
+  height: auto;
+  padding: 10px;
+  background-color: #F7CACD;
+  font-weight : bold ;
+}

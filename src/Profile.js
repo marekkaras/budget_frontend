@@ -7,6 +7,7 @@ import SummaryTab from "./js/Summary.js";
 import HistoryTab from "./js/History.js";
 import ManageTab from "./js/Manage.js";
 import LogOutButton from "./js/LogOut.js";
+import logo from "./img/logo.png";
 
 // rendering user info class
 class RenderProfile extends React.Component {
@@ -99,14 +100,9 @@ class RenderProfile extends React.Component {
   render() {
     return (
       <>
-        <h1>Budget 1.0</h1>
-        <p>
-          Hello {this.state.full_name} [{this.state.username},{" "}
-          {this.state.email}]
-        </p>
+        <img src={logo} alt="Logo" width="600" height="150" />
         <div id="profile_wrapper">
           <div id="menu_div">
-            <p>Menu</p>
 
             <button
               value={this.state.summary_tab}
@@ -130,6 +126,10 @@ class RenderProfile extends React.Component {
               Manage
             </button>
             <LogOutButton />
+            <p><b>
+          You are logged in as {this.state.username} ({this.state.email}).
+        </b>
+        </p>
           </div>
           <div id="main_div">
             <div>

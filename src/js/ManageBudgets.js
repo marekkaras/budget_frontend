@@ -117,6 +117,7 @@ export function Manager({
           name="year"
           id="year"
           onChange={updateYear}
+          className="dropdownSelector"
         >
           <option data-testid="year-option" value="2023">
             2023
@@ -137,6 +138,7 @@ export function Manager({
           name="month"
           id="month"
           onChange={updateMonth}
+          className="dropdownSelector"
         >
           <option data-testid="month-option" value="1">
             January

@@ -1,3 +1,9 @@
+body {background-color: #FEF6EC;} 
+
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
 #profile_wrapper {
   /* border: 1px solid blue; */
   display: grid;
@@ -21,11 +27,42 @@
   width: 90%;
   height: auto;
   padding: 10px;
-  background-color: transparent;
+  background-color: #F7CACD;
+  font-weight : bold ;
 }
 
 #main_div {
   vertical-align: top;
   display: inline-block;
-  border: 1px solid #0c1b33;
+  border: 0px solid #0c1b33;
+}
+
+
+/* Common styles for all buttons  */
+.add-button, .update-button, .delete-button {
+padding: 8px 15px;
+text-align: center;
+cursor: pointer;
+outline: none;
+color: #fff;
+border: none;
+border-radius: 10px;
+box-shadow: 0 5px #999999a5;
+margin: 8px 5px;
+width: 8%;
+min-width: 80px;
+}
+
+.add-button:active, .update-button:active, .delete-button:active {
+  box-shadow: 0 2px #999999a5;
+  transform: translateY(3px);
+}
+
+/* Background for add and update buttons */
+.add-button, .update-button {
+    background-color: #1316e3;
+}
+
+.add-button:hover, .update-button:hover {
+  background-color: #0a0c6c;
 }

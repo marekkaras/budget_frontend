@@ -19,10 +19,8 @@ export class SignUpPopUp extends React.Component {
   render() {
     return (
       <div>
-        <div className="login-btn" onClick={this.togglePop}>
-          <button>Sign Up</button>
-        </div>
-        {this.state.seen ? <SignUp toggle={this.togglePop} /> : null}
+      {this.state.seen ? <SignUp toggle={this.togglePop} /> : null}
+      {this.state.seen ? null : <div className="login-btn" onClick={this.togglePop}><button className="menuButton">Sign Up</button></div>}
       </div>
     );
   }
@@ -152,7 +150,7 @@ function SignUpBox( {handler}) {
           <label style={{ marginRight: 10 }}>Full Name: </label>
           <input type="text" onChange={(e) => setFullName(e.target.value)} />
           <br></br>
-          <button type="button" onClick={createUser}>
+          <button type="button" onClick={createUser} className="loginButton">
             Create User
           </button>
         </form>

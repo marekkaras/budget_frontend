@@ -19,10 +19,8 @@ export class LoginPopUp extends React.Component {
   render() {
     return (
       <div>
-        <div className="login-btn" onClick={this.togglePop}>
-          <button>Sign In</button>
-        </div>
-        {this.state.seen ? <PopUpLogin toggle={this.togglePop} /> : null}
+      {this.state.seen ? <PopUpLogin toggle={this.togglePop} /> : null}
+      {this.state.seen ? null : <div className="login-btn" onClick={this.togglePop}><button className="loginButton">Sign In</button></div>}
       </div>
     );
   }
@@ -110,7 +108,7 @@ function LoginBox( { handler } ) {
             onChange={(e) => setPassword(e.target.value)}
           />
           <br></br>
-          <button type="button" onClick={login}>
+          <button type="button" onClick={login} className="loginButton">
             Login
           </button>
           <br></br>

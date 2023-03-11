@@ -1,15 +1,24 @@
+.summaryPlotWrapper {
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .summaryPlot {
-  max-width: 100%;
-  max-height: 100%;
-  display: grid;
   grid-template-columns: 1fr 1fr;
   margin: 20px;
+  align-items: center;
+  width: 50%;
+  height: 50%;
 }
 
 .categoriesTableDiv {
   display: flex;
   justify-content: center;
   align-items: center;
+  vertical-align: top;
 }
 
 .categoriesTable td,
@@ -23,6 +32,10 @@
   background-color: #d1dede;
 }
 
+.categoriesTable tr:nth-child(odd) {
+  background-color: white;
+}
+
 .categoriesTable tr:hover {
   background-color: #4b6858;
 }
@@ -33,4 +46,8 @@
   text-align: center;
   background-color: #3185fc;
   color: white;
+}
+
+.dropdownSelector {
+  background-color: white;
 }

@@ -118,7 +118,7 @@ export default function HistoryTab() {
     return (
       <>
         <label htmlFor="budgetSelect"></label>
-        <select id="budgetSelect" value={budgetDate} onChange={updateDate}>
+        <select id="budgetSelect" value={budgetDate} onChange={updateDate} className="dropdownSelector">
           {budgetDates.map(customObj => {
             const dateString = stringifyMonth(customObj.year, customObj.month);
             return (
